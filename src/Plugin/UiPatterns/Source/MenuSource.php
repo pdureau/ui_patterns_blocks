@@ -22,6 +22,7 @@ class MenuSource extends PatternSourceBase {
    */
   public function getSourceFields() {
     $sources = [];
+    $sources[] = $this->getSourceField('title', 'Title');
     $sources[] = $this->getSourceField('items', 'Items');
     return $sources;
   }

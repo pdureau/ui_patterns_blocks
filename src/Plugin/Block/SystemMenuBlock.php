@@ -109,6 +109,11 @@ class SystemMenuBlock extends CoreSystemMenuBlock {
     $build = parent::build();
     $config = $this->getConfiguration();
 
+    // Don't display menu if empty.
+    if (!array_key_exists('#items', $build)) {
+      return $build;
+    }
+
     // Set pattern fields.
     $fields = [];
     $mapping = $config['pattern_mapping'];
@@ -120,6 +125,9 @@ class SystemMenuBlock extends CoreSystemMenuBlock {
     foreach ($mapping as $source => $field) {
       if ($field['destination'] === '_hidden') {
         continue;
+      }
+      if ($source === 'system_menu_block:title') {
+        $fields[$field['destination']] = $this->configuration['label'];
       }
       if ($source === 'system_menu_block:items') {
         $fields[$field['destination']] = $build['#items'];
